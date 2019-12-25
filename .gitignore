@@ -1,5 +1,4 @@
-</pre>
-*.env
-*.gitignore
-node_modules
-<pre>
+# node.js
+#
+node_modules/
+.env
