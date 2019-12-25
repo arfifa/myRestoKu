@@ -31,8 +31,6 @@ router.put('/update/:id_item', (req, res) => {
 
 router.delete('/delete/:id_item', (req, res) => {
   const { id_item } = req.params
-  console.log(item.delete_item);
-
   mysql.execute(item.delete_item, [id_item], (err, result, field) => {
     res.send(result)
   })
