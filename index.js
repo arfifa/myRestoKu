@@ -18,13 +18,13 @@ app.use(bodyParser.json())
 
 app.use('/user', user)
 app.use('/role', auth, admin, role)
-app.use('/item', auth, karyawan, item)
+app.use('/item', auth, item)
 app.use('/restaurant', auth, restaurant)
-app.use('/category', auth, category)
+app.use('/category', auth, admin, category)
 app.use('/cart', auth, cart)
 
 const port = process.env.APP_PORT;
 
 app.listen(port, () => {
-  console.log('App Listen on 8080')
+  console.log(`server run on port ${port}`)
 })

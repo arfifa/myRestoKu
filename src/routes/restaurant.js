@@ -1,9 +1,12 @@
 require('dotenv').config()
 const router = require('express').Router()
+const multer = require('multer')
 
 const mysql = require('../dbconfig')
-const { auth } = require('../middleware')
 const restaurant = require('../model/restaurant')
+const upload = require('../helper')
+
+const uploadImageLogo = multer({ storage: upload.storageRestaurant }).single('logo')
 
 router.get('/', (req, res) => {
   mysql.execute(restaurant.restaurants, [], (err, result, field) => {
@@ -11,8 +14,10 @@ router.get('/', (req, res) => {
   })
 })
 
-router.post('/insert', (req, res) => {
-  const { name, logo, longitude, latitude, description } = req.body
+router.post('/insert', uploadImageLogo, (req, res) => {
+  const { name, longitude, latitude, description } = req.body
+  const logo = req.file.filename
+
   const created_on = new Date()
   const updated_on = new Date()
   mysql.execute(restaurant.insert_restaurant, [name, logo, longitude, latitude, description, created_on, updated_on], (err, result, field) => {
@@ -28,7 +33,6 @@ router.put('/update/:id_restaurant', (req, res) => {
 
   mysql.execute(restaurant.update_restaurant, [name, logo, longitude, latitude, description, updated_on, id_restaurant], (err, result, field) => {
     console.log(err);
-
     res.send(result)
   })
 })

@@ -13,7 +13,7 @@ router.post('/login', (req, res) => {
     if (result.length > 0) {
       if (bcrypt.compareSync(password, result[0].password)) {
         const { id_role } = result[0]
-        const auth = jwt.sign({ id_role, username }, process.env.APP_KEY)
+        const auth = jwt.sign({ id_role, username }, process.env.APP_KEY, { expiresIn: '1d' })
         res.send(
           {
             success: true,

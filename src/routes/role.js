@@ -21,8 +21,6 @@ router.post('/insert', (req, res) => {
 
 router.put('/update/:id_role', (req, res) => {
   const { role_name } = req.body
-  console.log(role_name);
-
   const { id_role } = req.params
   const updated_on = new Date()
   mysql.execute(role.update_role, [role_name, updated_on, id_role], (err, result, field) => {

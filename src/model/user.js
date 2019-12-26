@@ -5,4 +5,5 @@ module.exports = {
   update_user: 'UPDATE users SET name=?, id_card=?, address=?, no_phone=?, username=?, password=?, role_id=?, updated_on=? WHERE id_user=?',
   delete_user: 'DELETE FROM users WHERE id_user=?',
   user_by_id: 'SELECT * FROM users WHERE id_user=?',
+  insert_token: 'INSERT INTO revoked_token (id_token, is_revoked, created_at ) VALUES(?,?,?)'
 }
