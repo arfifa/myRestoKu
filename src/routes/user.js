@@ -12,14 +12,30 @@ router.post('/login', (req, res) => {
   mysql.execute(user.user_login, [username], (err, result, field) => {
     if (result.length > 0) {
       if (bcrypt.compareSync(password, result[0].password)) {
-        const { id_role } = result[0]
-        const auth = jwt.sign({ id_role, username }, process.env.APP_KEY, { expiresIn: '1d' })
-        res.send(
-          {
-            success: true,
-            auth
+        const { id_role, id_user } = result[0]
+        const auth = jwt.sign({ id_role, username, id_user }, process.env.APP_KEY, { expiresIn: '1d' })
+
+        const created_on = new Date()
+        mysql.execute(user.get_token, [username], (err, result, field) => {
+          if (result.length === 0) {
+            mysql.execute(user.insert_token, [auth, username], (err, result, field) => {
+              res.send({ success: true, auth })
+            })
+          } else {
+            const expiredToken = jwt.verify(result[0].id_token, process.env.APP_KEY)
+            let thisTime = Math.floor(created_on / 1000)
+            if (expiredToken.exp >= thisTime) {
+              res.send({
+                success: true,
+                token: result[0].id_token
+              })
+            } else {
+              mysql.execute(user.update_token, [auth, username], (err, result, field) => {
+                res.send({ success: true, auth })
+              })
+            }
           }
-        )
+        })
       } else {
         res.send({
           success: false,
@@ -60,6 +76,16 @@ router.delete('/delete/:id_user', auth, (req, res) => {
   const { id_user } = req.params
   mysql.execute(user.delete_user, [id_user], (err, result, field) => {
     res.send(result)
+  })
+})
+
+router.delete('/logout', auth, (req, res) => {
+  const { username } = req.query
+  mysql.execute(user.delete_token, [username], (err, result, field) => {
+    console.log(err);
+    res.send({
+      success: true,
+    })
   })
 })
 

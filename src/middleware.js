@@ -1,11 +1,15 @@
-jwt = require('jsonwebtoken');
+jwt = require('jsonwebtoken')
+token = require('./model/user')
+mysql = require('./dbconfig')
 
 const auth = (req, res, next) => {
   if (req.headers['authorization'] && req.headers['authorization'].startsWith('Bearer')) {
     const jwt_token = req.headers['authorization'].substr(7)
     try {
       const user = jwt.verify(jwt_token, process.env.APP_KEY)
-      next()
+      mysql.execute(token.get_token, [user.username], (err, result, field) => {
+        result.length > 0 ? next() : res.send({ success: false, msg: 'You must be login first' })
+      })
     } catch (e) {
       res.send({ success: false, msg: e })
     }

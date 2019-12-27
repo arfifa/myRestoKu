@@ -9,6 +9,7 @@ const item = require('./src/routes/item');
 const restaurant = require('./src/routes/restaurant');
 const category = require('./src/routes/category');
 const cart = require('./src/routes/cart');
+const review = require('./src/routes/review');
 const { auth, admin, karyawan } = require('./src/middleware');
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/item', auth, item)
 app.use('/restaurant', auth, restaurant)
 app.use('/category', auth, admin, category)
 app.use('/cart', auth, cart)
+app.use('/review', review)
 
 const port = process.env.APP_PORT;
 
