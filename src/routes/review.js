@@ -5,7 +5,8 @@ const mysql = require('../dbconfig')
 const reviews = require('../model/review')
 
 router.get('/', (req, res) => {
-  mysql.execute(reviews.reviews, [], (err, result, field) => {
+  const { id_item } = req.query
+  mysql.execute(reviews.reviews_by_id_item, [id_item], (err, result, field) => {
     if (err == null) {
       res.send({
         status: 200,

@@ -1,5 +1,5 @@
 module.exports = {
-  reviews: 'SELECT * FROM review',
+  reviews_by_id_item: 'SELECT * FROM review WHERE id_item=?',
   insert_review: 'INSERT INTO review (id_item, id_user, name, review, rating, created_on, updated_on) VALUES(?,?,?,?,?,?,?)',
   delete_review: 'DELETE FROM review WHERE id_review=?',
   review_by_id: 'SELECT * FROM review WHERE id_review=?',

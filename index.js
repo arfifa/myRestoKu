@@ -23,7 +23,7 @@ app.use('/item', auth, item)
 app.use('/restaurant', auth, restaurant)
 app.use('/category', auth, admin, category)
 app.use('/cart', auth, cart)
-app.use('/review', review)
+app.use('/review', auth, review)
 
 const port = process.env.APP_PORT;
 

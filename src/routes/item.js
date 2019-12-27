@@ -6,7 +6,28 @@ const mysql = require('../dbconfig')
 const item = require('../model/item')
 const upload = require('../helper')
 
-const uploadImageItem = multer({ storage: upload.storageItem }).single('images')
+const uploadImageItem = multer({
+  storage: upload.storageItem,
+  limits: { fileSize: 1000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb)
+  }
+}).single('images')
+
+//check file type
+function checkFileType(file, cb) {
+  //Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/
+  //check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
+  //check mime
+  const mimetype = filetypes.test(file.mimetype)
+  if (mimetype && extname) {
+    return cb(null, true)
+  } else {
+    cb('Error: Images Only')
+  }
+}
 
 router.get('/', (req, res) => {
   const { item_name, lowers_price, highest_price, ratings } = req.query
@@ -98,10 +119,21 @@ router.get('/itempage', (req, res) => {
 router.post('/insert', uploadImageItem, (req, res) => {
   const { id_category, item_name, price, description, ratings } = req.body
   const images = req.file.filename
+
   const created_on = new Date()
   const updated_on = new Date()
   mysql.execute(item.insert_item, [id_category, item_name, price, description, images, ratings, created_on, updated_on], (err, result, field) => {
-    res.send(result)
+    if (err == null) {
+      res.send({
+        status: 200,
+        result
+      })
+    } else {
+      res.send({
+        status: 400,
+        msg: err
+      })
+    }
   })
 })
 
