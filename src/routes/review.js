@@ -75,7 +75,7 @@ router.delete('/delete/:id_review/:id_item', (req, res) => {
               if (err == null) {
                 res.send({
                   status: 200,
-                  msg: 'rating berhasil dihapus!'
+                  msg: 'review berhasil dihapus!'
                 })
               } else {
                 res.send({
@@ -91,7 +91,7 @@ router.delete('/delete/:id_review/:id_item', (req, res) => {
               if (err == null) {
                 res.send({
                   status: 200,
-                  msg: 'rating berhasil dihapus!'
+                  msg: 'review tidak ditemukan!'
                 })
               } else {
                 res.send({
