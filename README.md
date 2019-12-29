@@ -1,4 +1,4 @@
-<h1 align="center">ExpressJS - Simple Notes App RESTfull API</h1>
+<h1 align="center">ExpressJS - Simple Restaurant RESTfull API</h1>
 
 
 
