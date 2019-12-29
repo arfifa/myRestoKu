@@ -5,8 +5,8 @@
 Note App is a simple note application specially for backend only. Built with NodeJs using the ExpressJs Framework.
 Express.js is a web application framework for Node.js. [More about Express](https://en.wikipedia.org/wiki/Express.js)
 ## Built With
-[![Express.js](https://img.shields.io/badge/Express.js-4.x-orange.svg?style=rounded-square)](https://expressjs.com/en/starter/installing.html)
-[![Node.js](https://img.shields.io/badge/Node.js-v.10.16-green.svg?style=rounded-square)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.17.1-orange.svg?style=rounded-square)](https://expressjs.com/en/starter/installing.html)
+[![Node.js](https://img.shields.io/badge/Node.js-v.v12.10.0-green.svg?style=rounded-square)](https://nodejs.org/)
 
 ## Requirements
 1. <a href="https://nodejs.org/en/download/">Node Js</a>
@@ -27,20 +27,48 @@ Express.js is a web application framework for Node.js. [More about Express](http
 ## Set up .env file
 Open .env file on your favorite code editor, and copy paste this code below :
 ```
-PORT=3000
-HOST=localhost
-USER=root // default
-PASS= // default
-DATABASE=note
-NODE_ENV=development node server.js
+APP_PORT=3000
+APP_URI=http://localhost:3000/
+DB_SERVER=localhost//default
+DB_USER=root//default
+DB_PASSWORD=
+DB_DATABASE=restoku
 ```
 
 ## End Point
-**1. GET**
-* `/notes`
-* `/notes?search=lorem&sort=ASC&limit=5&page=1`
-* `/note/:id` (Get note by id)
-* `/categories`
+**1. GET**<br>
+*a. item*
+* `/item`
+* `/item?item_name=jeruk`(search by item_name)
+* `/item?item_name=nasi&sort=ASC`(search by item_name order by item_name and date_created ASC)
+* `/item?item_name=nasi&sort=DESC`(search by item_name order by item_name and date_created DESC)
+* `/item?item_name=nasi&sort=DESC&limits=1&page=2`(search by item_name order by item_name and date_created DESC with pagination)
+* `/item?lowers_price=5000&highest_price=70000`(search by price)
+* `/item?lowers_price=5000&highest_price=70000&sort=ASC`(search by price order by price and date_created ASC)
+* `/item?lowers_price=5000&highest_price=70000&sort=DESC`(search by price order by price and date_created DESC)
+* `/item?lowers_price=5000&highest_price=70000&sort=DESC&limits=1&page=2`(search by price order by price and date_created DESC with pagination)
+* `/item?ratings=5`(search by ratings)
+* `/item/item_by_id/:id_item` (Get item by id with showcase by highest rating)
+
+*b. cart*
+* `/cart`(get all cart)
+* `/cart/user/:id_user`(get cart by id_user)
+* `/item?item_name=nasi&sort=ASC`(search by item_name order by item_name and date_created ASC)
+* `/item?item_name=nasi&sort=DESC`(search by item_name order by item_name and date_created DESC)
+* `/item?item_name=nasi&sort=DESC&limits=1&page=2`(search by item_name order by item_name and date_created DESC with pagination)
+* `/item?lowers_price=5000&highest_price=70000`(search by price)
+* `/item?lowers_price=5000&highest_price=70000&sort=ASC`(search by price order by price and date_created ASC)
+* `/item?lowers_price=5000&highest_price=70000&sort=DESC`(search by price order by price and date_created DESC)
+* `/item?lowers_price=5000&highest_price=70000&sort=DESC&limits=1&page=2`(search by price order by price and date_created DESC with pagination)
+* `/item?ratings=5`(search by ratings)
+* `/item/item_by_id/:id_item` (Get item by id with showcase by highest rating)
+
+* `/item/insert` (insert item)
+* `/item/update/:id_item`(update item)
+* `/item/delete/:id_item`(delete item)
+
+
+
 * `/categories?search=Diary`
 * `/category/:id` (Get category by id)
 
