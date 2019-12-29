@@ -15,7 +15,17 @@ router.post('/insert', (req, res) => {
   const created_on = new Date()
   const updated_on = new Date()
   mysql.execute(category.insert_category, [category_name, created_on, updated_on], (err, result, field) => {
-    res.send(result)
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 
@@ -25,14 +35,34 @@ router.put('/update/:id_category', (req, res) => {
   const updated_on = new Date()
 
   mysql.execute(category.update_category, [category_name, updated_on, id_category], (err, result, field) => {
-    res.send(result)
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 
 router.delete('/delete/:id_category', (req, res) => {
   const { id_category } = req.params
   mysql.execute(category.delete_category, [id_category], (err, result, field) => {
-    res.send(result)
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 

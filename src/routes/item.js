@@ -500,7 +500,7 @@ router.get('/item_by_id/:id_item', (req, res) => {
     if (err == null) {
       const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE id_category=${result[0].id_category} AND id_item!=${result[0].id_item} ORDER BY ratings DESC`
       mysql.execute(sql, [], (error, results, fields) => {
-        if (err == null) {
+        if (error == null) {
           res.send({
             status: 200,
             result: result,
@@ -549,14 +549,34 @@ router.put('/update/:id_item', (req, res) => {
   const updated_on = new Date()
 
   mysql.execute(item.update_item, [id_category, item_name, price, description, images, ratings, updated_on, id_item], (err, result, field) => {
-    res.send(result)
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 
 router.delete('/delete/:id_item', (req, res) => {
   const { id_item } = req.params
   mysql.execute(item.delete_item, [id_item], (err, result, field) => {
-    res.send(result)
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 

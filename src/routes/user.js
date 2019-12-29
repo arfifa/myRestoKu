@@ -58,33 +58,67 @@ router.post('/register', (req, res) => {
   const created_on = new Date()
   const updated_on = new Date()
   mysql.execute(user.insert_user, [name, id_card, address, no_phone, username, enc_pass, id_role, created_on, updated_on], (err, result, field) => {
-    res.send(result)
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 
 router.get('/', auth, (req, res) => {
-  mysql.execute(user.users, [id_user], (err, result, field) => {
-    res.send({
-      success: true,
-      data: result[0]
-    })
+  mysql.execute(user.users, [], (err, result, field) => {
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 
 router.get('/update/:id_user', auth, (req, res) => {
   const { id_user } = req.params
   mysql.execute(user.user_by_id, [id_user], (err, result, field) => {
-    res.send({
-      success: true,
-      data: result[0]
-    })
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 
 router.delete('/delete/:id_user', auth, (req, res) => {
   const { id_user } = req.params
   mysql.execute(user.delete_user, [id_user], (err, result, field) => {
-    res.send(result)
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 
@@ -92,9 +126,17 @@ router.delete('/logout', auth, (req, res) => {
   const { username } = req.query
   mysql.execute(user.delete_token, [username], (err, result, field) => {
     console.log(err);
-    res.send({
-      success: true,
-    })
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
   })
 })
 
