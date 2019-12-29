@@ -94,7 +94,7 @@ DB_DATABASE=restoku
             "updated_on": "2019-12-26T10:00:28.000Z"
         }```
    
-  * `/review/insert`
+ * `/review/insert`
     * ```{
             "id_review": 52,
             "id_item": 1,
@@ -106,7 +106,7 @@ DB_DATABASE=restoku
             "updated_on": "2019-12-29T04:12:27.000Z"
         }```
    
-   * `/role/insert`
+ * `/role/insert`
     * ```{
         "id_role": 1,
         "role_name": "Admin",
@@ -114,7 +114,7 @@ DB_DATABASE=restoku
         "updated_on": "2019-12-25T05:33:53.000Z"
     }```
     
-    * `/register`
+ * `/register`
     * ```{
         "id_user": 2,
         "name": "akuh",
