@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
 
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
@@ -60,7 +60,7 @@ router.get('/', (req, res) => {
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
 
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
@@ -86,7 +86,7 @@ router.get('/', (req, res) => {
       } else {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
@@ -109,7 +109,7 @@ router.get('/', (req, res) => {
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
 
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
@@ -135,7 +135,7 @@ router.get('/', (req, res) => {
       }
     } else if (item_name && sort) {
       if (sort == 'ASC') {
-        const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC`
+        const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC`
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
@@ -150,7 +150,7 @@ router.get('/', (req, res) => {
           }
         })
       } else {
-        const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC`
+        const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC`
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
@@ -166,7 +166,7 @@ router.get('/', (req, res) => {
         })
       }
     } else {
-      const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' `
+      const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE item_name LIKE '%${item_name}%' `
       mysql.execute(sql, [], (err, result, field) => {
         if (err == null) {
           res.send({
@@ -186,7 +186,7 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
@@ -209,7 +209,7 @@ router.get('/', (req, res) => {
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
@@ -234,7 +234,7 @@ router.get('/', (req, res) => {
       } else {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
@@ -257,7 +257,7 @@ router.get('/', (req, res) => {
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
@@ -282,7 +282,7 @@ router.get('/', (req, res) => {
       }
     } else if (highest_price && lowers_price && sort) {
       if (sort == 'ASC') {
-        const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC`
+        const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC`
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
@@ -297,7 +297,7 @@ router.get('/', (req, res) => {
           }
         })
       } else {
-        const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC`
+        const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC`
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
@@ -313,7 +313,7 @@ router.get('/', (req, res) => {
         })
       }
     } else {
-      const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} `
+      const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} `
       mysql.execute(sql, [], (err, result, field) => {
         if (err == null) {
           res.send({
@@ -333,7 +333,7 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
@@ -356,7 +356,7 @@ router.get('/', (req, res) => {
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
@@ -381,7 +381,7 @@ router.get('/', (req, res) => {
       } else {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
@@ -404,7 +404,7 @@ router.get('/', (req, res) => {
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
             if (err == null) {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
@@ -431,7 +431,7 @@ router.get('/', (req, res) => {
       }
     } else if (ratings && sort) {
       if (sort == 'ASC') {
-        const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC`
+        const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC`
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
@@ -446,7 +446,7 @@ router.get('/', (req, res) => {
           }
         })
       } else {
-        const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC`
+        const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC`
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
@@ -462,7 +462,7 @@ router.get('/', (req, res) => {
         })
       }
     } else {
-      const sql = `SELECT * FROM items WHERE ratings >= ${ratings} `
+      const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE ratings >= ${ratings} `
       mysql.execute(sql, [], (err, result, field) => {
         if (err == null) {
           res.send({
@@ -492,6 +492,35 @@ router.get('/', (req, res) => {
       }
     })
   }
+})
+
+router.get('/item_by_id/:id_item', (req, res) => {
+  const { id_item } = req.params
+  mysql.execute(item.item_by_id, [id_item], (err, result, field) => {
+    if (err == null) {
+      const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE id_category=${result[0].id_category} AND id_item!=${result[0].id_item} ORDER BY ratings DESC`
+      mysql.execute(sql, [], (error, results, fields) => {
+        if (err == null) {
+          console.log(result[0].id_category)
+          res.send({
+            status: 200,
+            result: result,
+            showcase: [results]
+          })
+        } else {
+          res.send({
+            status: 400,
+            msg: "error"
+          })
+        }
+      })
+    } else {
+      res.send({
+        status: 400,
+        msg: "error"
+      })
+    }
+  })
 })
 
 router.post('/insert', uploadImageItem, (req, res) => {

@@ -2,28 +2,32 @@ require('dotenv').config()
 const router = require('express').Router()
 
 const mysql = require('../dbconfig')
-const cart = require('../model/cart')
+const booking = require('../model/booking')
 const { admin } = require('../middleware')
 
-router.get('/', admin, (req, res) => {
-  mysql.execute(cart.carts, [], (err, result, field) => {
-    if (err == null) {
-      res.send({
-        status: 200,
-        result: [result]
-      })
-    } else {
-      res.send({
-        status: 400,
-        msg: 'error'
-      })
-    }
-  })
-})
-
-router.get('/user', (req, res) => {
+router.post('/userBooking', (req, res) => {
+  const { name, zipcode, total_payment } = req.body
   const { id_user } = req.query
-  mysql.execute(cart.carts_by_id_user, [id_user], (err, result, field) => {
+  const no_booking = `Booking ${new Date() / 1000}`
+  const date_booking = new Date()
+  mysql.execute(booking.insert_booking, [no_booking, date_booking, name, id_user, zipcode, total_payment, false], (err, result, field) => {
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        msg: 'error'
+      })
+    }
+  })
+})
+
+router.post('/insert_detailBooking', (req, res) => {
+  const { no_booking, id_item, item_name, item_price, amount } = req.query
+  mysql.execute(booking.insert_booking_detail, [no_booking, id_item, item_name, item_price, amount], (err, result, field) => {
     if (err == null) {
       res.send({
         status: 200,
@@ -38,11 +42,9 @@ router.get('/user', (req, res) => {
   })
 })
 
-router.post('/insert', (req, res) => {
-  const { id_item, id_user, item_name, price, number_of_item } = req.body
-  const created_on = new Date()
-  const updated_on = new Date()
-  mysql.execute(cart.insert_cart, [id_item, id_user, item_name, price, number_of_item, created_on, updated_on], (err, result, field) => {
+router.get('/detailBooking', (req, res) => {
+  const { id_user } = req.query
+  mysql.execute(booking.booking_detail, [id_user], (err, result, field) => {
     if (err == null) {
       res.send({
         status: 200,
@@ -57,28 +59,9 @@ router.post('/insert', (req, res) => {
   })
 })
 
-router.put('/update/:id_cart', (req, res) => {
-  const { price, number_of_item } = req.body
-  const { id_cart } = req.params
-  const updated_on = new Date()
-  mysql.execute(cart.update_cart, [price, number_of_item, updated_on, id_cart], (err, result, field) => {
-    if (err == null) {
-      res.send({
-        status: 200,
-        result: [result]
-      })
-    } else {
-      res.send({
-        status: 400,
-        msg: 'error'
-      })
-    }
-  })
-})
-
-router.delete('/delete/:id_cart', (req, res) => {
-  const { id_cart } = req.params
-  mysql.execute(cart.delete_cart, [id_cart], (err, result, field) => {
+router.delete('/delete/:no_booking', admin, (req, res) => {
+  const { no_booking } = req.params
+  mysql.execute(booking.delete_booking, [no_booking], (err, result, field) => {
     if (err == null) {
       res.send({
         status: 200,

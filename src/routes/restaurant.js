@@ -34,12 +34,12 @@ router.get('/', (req, res) => {
 })
 
 router.post('/insert', uploadImageLogo, (req, res) => {
-  const { name, longitude, latitude, description } = req.body
+  const { id_user, name, longitude, latitude, description } = req.body
   const logo = req.file.filename
 
   const created_on = new Date()
   const updated_on = new Date()
-  mysql.execute(restaurant.insert_restaurant, [name, logo, longitude, latitude, description, created_on, updated_on], (err, result, field) => {
+  mysql.execute(restaurant.insert_restaurant, [id_user, name, logo, longitude, latitude, description, created_on, updated_on], (err, result, field) => {
     console.log(err)
     res.send(result)
   })
