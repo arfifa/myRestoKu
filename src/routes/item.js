@@ -36,29 +36,100 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
+
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
+
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         }
       } else {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql1 = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC LIMIT ${initial_data}, ${limits}`
-          mysql.execute(sql1, [], (err, result, field) => {
-            res.send(result)
+          const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
+
+          mysql.execute(sql, [], (err, result, field) => {
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         }
       }
@@ -66,20 +137,48 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name ASC`
         mysql.execute(sql, [], (err, result, field) => {
-          res.send(result)
+          if (err == null) {
+            res.send({
+              status: 200,
+              result: [result]
+            })
+          } else {
+            res.send({
+              status: 400,
+              msg: "error"
+            })
+          }
         })
       } else {
         const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' ORDER BY item_name DESC`
         mysql.execute(sql, [], (err, result, field) => {
-          console.log(err)
-
-          res.send(result)
+          if (err == null) {
+            res.send({
+              status: 200,
+              result: [result]
+            })
+          } else {
+            res.send({
+              status: 400,
+              msg: "error"
+            })
+          }
         })
       }
     } else {
       const sql = `SELECT * FROM items WHERE item_name LIKE '%${item_name}%' `
       mysql.execute(sql, [], (err, result, field) => {
-        res.send(result)
+        if (err == null) {
+          res.send({
+            status: 200,
+            result: [result]
+          })
+        } else {
+          res.send({
+            status: 400,
+            msg: "error"
+          })
+        }
       })
     }
   } else if (lowers_price && highest_price) {
@@ -87,15 +186,49 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         }
       } else {
@@ -103,13 +236,47 @@ router.get('/', (req, res) => {
           const initial_data = page - 1
           const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql1 = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC LIMIT ${initial_data}, ${limits}`
-          mysql.execute(sql1, [], (err, result, field) => {
-            res.send(result)
+          const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC LIMIT ${initial_data}, ${limits}`
+          mysql.execute(sql, [], (err, result, field) => {
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         }
       }
@@ -117,20 +284,48 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price ASC`
         mysql.execute(sql, [], (err, result, field) => {
-          res.send(result)
+          if (err == null) {
+            res.send({
+              status: 200,
+              result: [result]
+            })
+          } else {
+            res.send({
+              status: 400,
+              msg: "error"
+            })
+          }
         })
       } else {
         const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} ORDER BY price DESC`
         mysql.execute(sql, [], (err, result, field) => {
-          console.log(err)
-
-          res.send(result)
+          if (err == null) {
+            res.send({
+              status: 200,
+              result: [result]
+            })
+          } else {
+            res.send({
+              status: 400,
+              msg: "error"
+            })
+          }
         })
       }
     } else {
       const sql = `SELECT * FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price} `
       mysql.execute(sql, [], (err, result, field) => {
-        res.send(result)
+        if (err == null) {
+          res.send({
+            status: 200,
+            result: [result]
+          })
+        } else {
+          res.send({
+            status: 400,
+            msg: "error"
+          })
+        }
       })
     }
   } else if (ratings) {
@@ -138,29 +333,99 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC, date_created ASC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         }
       } else {
         if (page == 1) {
           const initial_data = page - 1
-          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC LIMIT ${initial_data}, ${limits}`
+          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
           mysql.execute(sql, [], (err, result, field) => {
-            res.send(result)
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         } else if (page >= 2) {
           const initial_data = (page * limits) - limits
-          const sql1 = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC LIMIT ${initial_data}, ${limits}`
-          mysql.execute(sql1, [], (err, result, field) => {
-            res.send(result)
+          const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC, date_created DESC LIMIT ${initial_data}, ${limits}`
+          mysql.execute(sql, [], (err, result, field) => {
+            if (err == null) {
+              const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
+              mysql.execute(countRows, [], (error, results, fields) => {
+                res.send({
+                  status: 200,
+                  result: [result],
+                  page: page,
+                  limit: limits,
+                  total_data: results[0].count_item,
+                  total_page: Math.ceil(results[0].count_item / limits)
+                })
+              })
+            } else {
+              console.log(err)
+
+              res.send({
+                status: 400,
+                msg: 'error'
+              })
+            }
           })
         }
       }
@@ -168,25 +433,63 @@ router.get('/', (req, res) => {
       if (sort == 'ASC') {
         const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings ASC`
         mysql.execute(sql, [], (err, result, field) => {
-          res.send(result)
+          if (err == null) {
+            res.send({
+              status: 200,
+              result: [result]
+            })
+          } else {
+            res.send({
+              status: 400,
+              msg: "error"
+            })
+          }
         })
       } else {
         const sql = `SELECT * FROM items WHERE ratings >= ${ratings} ORDER BY ratings DESC`
         mysql.execute(sql, [], (err, result, field) => {
-          console.log(err)
-
-          res.send(result)
+          if (err == null) {
+            res.send({
+              status: 200,
+              result: [result]
+            })
+          } else {
+            res.send({
+              status: 400,
+              msg: "error"
+            })
+          }
         })
       }
     } else {
       const sql = `SELECT * FROM items WHERE ratings >= ${ratings} `
       mysql.execute(sql, [], (err, result, field) => {
-        res.send(result)
+        if (err == null) {
+          res.send({
+            status: 200,
+            result: [result]
+          })
+        } else {
+          res.send({
+            status: 400,
+            msg: "error"
+          })
+        }
       })
     }
   } else {
     mysql.execute(item.items, [], (err, result, field) => {
-      res.send(result)
+      if (err == null) {
+        res.send({
+          status: 200,
+          result: [result]
+        })
+      } else {
+        res.send({
+          status: 400,
+          msg: "error"
+        })
+      }
     })
   }
 })

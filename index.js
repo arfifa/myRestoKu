@@ -19,11 +19,11 @@ app.use(bodyParser.json())
 
 app.use('/user', user)
 app.use('/role', auth, admin, role)
-app.use('/item', auth, item)
-app.use('/restaurant', auth, restaurant)
-app.use('/category', auth, admin, category)
+app.use('/item', item)
+app.use('/restaurant', restaurant)
+app.use('/category', category)
 app.use('/cart', auth, cart)
-app.use('/review', auth, review)
+app.use('/review', review)
 
 const port = process.env.APP_PORT;
 

@@ -69,7 +69,6 @@ router.delete('/delete/:id_review/:id_item', (req, res) => {
         if (err == null) {
           if (result[0].averageRating != null) {
             console.log(result[0].averageRating);
-
             const ratings = result[0].averageRating.toFixed(2)
             mysql.execute(reviews.update_ratings, [ratings, id_item], (err, result, field) => {
               if (err == null) {

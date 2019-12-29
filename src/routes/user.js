@@ -14,7 +14,6 @@ router.post('/login', (req, res) => {
       if (bcrypt.compareSync(password, result[0].password)) {
         const { id_role, id_user } = result[0]
         const auth = jwt.sign({ id_role, username, id_user }, process.env.APP_KEY, { expiresIn: '1d' })
-
         const created_on = new Date()
         mysql.execute(user.get_token, [username], (err, result, field) => {
           if (result.length === 0) {
@@ -22,8 +21,9 @@ router.post('/login', (req, res) => {
               res.send({ success: true, auth })
             })
           } else {
-            const expiredToken = jwt.verify(result[0].id_token, process.env.APP_KEY)
+            const expiredToken = jwt.decode(result[0].id_token, process.env.APP_KEY)
             let thisTime = Math.floor(created_on / 1000)
+
             if (expiredToken.exp >= thisTime) {
               res.send({
                 success: true,
