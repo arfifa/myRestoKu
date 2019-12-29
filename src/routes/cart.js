@@ -10,7 +10,7 @@ router.get('/', admin, (req, res) => {
     if (err == null) {
       res.send({
         status: 200,
-        result: [result]
+        result: result
       })
     } else {
       res.send({
@@ -21,13 +21,13 @@ router.get('/', admin, (req, res) => {
   })
 })
 
-router.get('/user', (req, res) => {
-  const { id_user } = req.query
+router.get('/user/:id_user', (req, res) => {
+  const { id_user } = req.params
   mysql.execute(cart.carts_by_id_user, [id_user], (err, result, field) => {
     if (err == null) {
       res.send({
         status: 200,
-        result: [result]
+        result: result
       })
     } else {
       res.send({
@@ -46,7 +46,7 @@ router.post('/insert', (req, res) => {
     if (err == null) {
       res.send({
         status: 200,
-        result: [result]
+        result: result
       })
     } else {
       res.send({
@@ -65,7 +65,7 @@ router.put('/update/:id_cart', (req, res) => {
     if (err == null) {
       res.send({
         status: 200,
-        result: [result]
+        result: result
       })
     } else {
       res.send({
@@ -82,7 +82,7 @@ router.delete('/delete/:id_cart', (req, res) => {
     if (err == null) {
       res.send({
         status: 200,
-        result: [result]
+        result: result
       })
     } else {
       res.send({

@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -68,7 +68,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -93,7 +93,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -117,7 +117,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -140,7 +140,7 @@ router.get('/', (req, res) => {
           if (err == null) {
             res.send({
               status: 200,
-              result: [result]
+              result: result
             })
           } else {
             res.send({
@@ -155,7 +155,7 @@ router.get('/', (req, res) => {
           if (err == null) {
             res.send({
               status: 200,
-              result: [result]
+              result: result
             })
           } else {
             res.send({
@@ -171,7 +171,7 @@ router.get('/', (req, res) => {
         if (err == null) {
           res.send({
             status: 200,
-            result: [result]
+            result: result
           })
         } else {
           res.send({
@@ -193,7 +193,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -216,7 +216,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -241,7 +241,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -264,7 +264,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -287,7 +287,7 @@ router.get('/', (req, res) => {
           if (err == null) {
             res.send({
               status: 200,
-              result: [result]
+              result: result
             })
           } else {
             res.send({
@@ -302,7 +302,7 @@ router.get('/', (req, res) => {
           if (err == null) {
             res.send({
               status: 200,
-              result: [result]
+              result: result
             })
           } else {
             res.send({
@@ -318,7 +318,7 @@ router.get('/', (req, res) => {
         if (err == null) {
           res.send({
             status: 200,
-            result: [result]
+            result: result
           })
         } else {
           res.send({
@@ -340,7 +340,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -363,7 +363,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -388,7 +388,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -411,7 +411,7 @@ router.get('/', (req, res) => {
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
                   status: 200,
-                  result: [result],
+                  result: result,
                   page: page,
                   limit: limits,
                   total_data: results[0].count_item,
@@ -436,7 +436,7 @@ router.get('/', (req, res) => {
           if (err == null) {
             res.send({
               status: 200,
-              result: [result]
+              result: result
             })
           } else {
             res.send({
@@ -451,7 +451,7 @@ router.get('/', (req, res) => {
           if (err == null) {
             res.send({
               status: 200,
-              result: [result]
+              result: result
             })
           } else {
             res.send({
@@ -467,7 +467,7 @@ router.get('/', (req, res) => {
         if (err == null) {
           res.send({
             status: 200,
-            result: [result]
+            result: result
           })
         } else {
           res.send({
@@ -482,7 +482,7 @@ router.get('/', (req, res) => {
       if (err == null) {
         res.send({
           status: 200,
-          result: [result]
+          result: result
         })
       } else {
         res.send({
@@ -501,11 +501,10 @@ router.get('/item_by_id/:id_item', (req, res) => {
       const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE id_category=${result[0].id_category} AND id_item!=${result[0].id_item} ORDER BY ratings DESC`
       mysql.execute(sql, [], (error, results, fields) => {
         if (err == null) {
-          console.log(result[0].id_category)
           res.send({
             status: 200,
             result: result,
-            showcase: [results]
+            showcase: results
           })
         } else {
           res.send({

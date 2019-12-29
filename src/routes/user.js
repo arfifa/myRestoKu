@@ -62,6 +62,15 @@ router.post('/register', (req, res) => {
   })
 })
 
+router.get('/', auth, (req, res) => {
+  mysql.execute(user.users, [id_user], (err, result, field) => {
+    res.send({
+      success: true,
+      data: result[0]
+    })
+  })
+})
+
 router.get('/:id_user', auth, (req, res) => {
   const { id_user } = req.params
   mysql.execute(user.user_by_id, [id_user], (err, result, field) => {

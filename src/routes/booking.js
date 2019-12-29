@@ -31,7 +31,7 @@ router.post('/insert_detailBooking', (req, res) => {
     if (err == null) {
       res.send({
         status: 200,
-        result: [result]
+        result: result
       })
     } else {
       res.send({
@@ -42,13 +42,13 @@ router.post('/insert_detailBooking', (req, res) => {
   })
 })
 
-router.get('/detailBooking', (req, res) => {
-  const { id_user } = req.query
+router.get('/detailBooking/:id_user', (req, res) => {
+  const { id_user } = req.params
   mysql.execute(booking.booking_detail, [id_user], (err, result, field) => {
     if (err == null) {
       res.send({
         status: 200,
-        result: [result]
+        result: result
       })
     } else {
       res.send({
@@ -65,7 +65,7 @@ router.delete('/delete/:no_booking', admin, (req, res) => {
     if (err == null) {
       res.send({
         status: 200,
-        result: [result]
+        result: result
       })
     } else {
       res.send({
