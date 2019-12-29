@@ -73,9 +73,63 @@ DB_DATABASE=restoku
             "date_updated": "2019-12-25T14:42:35.000Z"
         } ```
 
-
+* `/category/insert`
+    * ```{
+        "id_category": 1,
+        "category_name": "makanan",
+        "created_on": "2019-12-25T09:58:57.000Z",
+        "updated_on": "2019-12-25T10:04:50.000Z"
+    }```
+ 
+ * `/restaurant/insert`
+    * ```{
+            "id_restaurant": 2,
+            "id_admin": 0,
+            "name": "Warung Bocah",
+            "logo": "logo1577354428131.jpg",
+            "longitude": -6.6115498542785645,
+            "latitude": 106.80780029296875,
+            "description": "ini adalah ",
+            "created_on": "2019-12-26T10:00:28.000Z",
+            "updated_on": "2019-12-26T10:00:28.000Z"
+        }```
+   
+  * `/review/insert`
+    * ```{
+            "id_review": 52,
+            "id_item": 1,
+            "id_user": 2,
+            "name": "arfifa rahman",
+            "review": "masakan disini membuat saya laper ",
+            "rating": 5,
+            "created_on": "2019-12-29T04:12:27.000Z",
+            "updated_on": "2019-12-29T04:12:27.000Z"
+        }```
+   
+   * `/role/insert`
+    * ```{
+        "id_role": 1,
+        "role_name": "Admin",
+        "created_on": "2019-12-25T05:57:24.000Z",
+        "updated_on": "2019-12-25T05:33:53.000Z"
+    }```
+    
+    * `/register`
+    * ```{
+        "id_user": 2,
+        "name": "akuh",
+        "id_card": "123412423",
+        "address": "jakarta",
+        "no_phone": "08124324234",
+        "username": "karyawan",
+        "password": "$2a$10$D6JVUpBiIRXW1ZgAZz1jaeDG15hM60xWejJBHgBZMt.5miz9pBbSq",
+        "id_role": 2,
+        "created_on": "2019-12-25T06:33:00.000Z",
+        "updated_on": "2019-12-25T06:17:40.000Z"
+    }```
+        
 **3. PUT**
-* * `/item/update/:id_item`(update item by id_item)
+* *`/item/update/:id_item`(update item by id_item)
    * ``` { "title": "Party", "note": "Herman's Party at 18.00", "category": 2 } ```
 * `/category/:id` (Update category by id)
    * ``` { "categoryName": "Category8" } ```
