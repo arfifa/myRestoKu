@@ -129,11 +129,23 @@ DB_DATABASE=restoku
     }```
         
 **3. PUT**
-* *`/item/update/:id_item`(update item by id_item)
-   * ``` { "title": "Party", "note": "Herman's Party at 18.00", "category": 2 } ```
-* `/category/:id` (Update category by id)
-   * ``` { "categoryName": "Category8" } ```
+* `/item/update/:id_item`(update item by id_item)
+* `/cart/update/:id_cart` (Update cart by id_cart)
+   * ```{
+        "price" : "45000", "number_of_item" : "1", "updated_on" : ""2019-12-25T06:17:40.000Z"
+    }```
+* `category/update/:id_category`(update category by id_category)
+* `/update/:id_restaurant`(update restaurant by id_restaurant)
+* `/update/:id_role`(update role by id_role)
+* `/update/:id_user`(update user by id_user)
 
 **4. DELETE**
 * `/item/delete/:id_item`(delete item)
+* `/cart/delete/:id_cart` (delete cart by id_cart)
+* `category/delete/:id_category`(delete category by id_category)
+* `/delete/:id_restaurant`(delete restaurant by id_restaurant)
+* `/delete/:id_role`(delete role by id_role)
+* `/delete/:id_user`(delete user by id_user)
+* `/delete/:review`(delete review by id_review)
+
 
