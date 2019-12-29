@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
 const mysql = require('../dbconfig')
-const { auth } = require('../middleware')
+const { auth, admin } = require('../middleware')
 const user = require('../model/user')
 
 router.post('/login', (req, res) => {
@@ -74,6 +74,23 @@ router.post('/register', (req, res) => {
 
 router.get('/', auth, (req, res) => {
   mysql.execute(user.users, [], (err, result, field) => {
+    if (err == null) {
+      res.send({
+        status: 200,
+        result: result
+      })
+    } else {
+      res.send({
+        status: 400,
+        result: "error"
+      })
+    }
+  })
+})
+
+router.get('/:id_user', auth, admin, (req, res) => {
+  const { id_user } = req.params
+  mysql.execute(user.user_by_id, [id_user], (err, result, field) => {
     if (err == null) {
       res.send({
         status: 200,

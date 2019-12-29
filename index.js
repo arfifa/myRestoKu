@@ -21,7 +21,7 @@ app.use('/user', user)
 app.use('/role', auth, admin, role)
 app.use('/item', item)
 app.use('/restaurant', restaurant)
-app.use('/category', category)
+app.use('/category', auth, karyawan, category)
 app.use('/cart', auth, cart)
 app.use('/review', review)
 

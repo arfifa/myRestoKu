@@ -3,6 +3,7 @@ const router = require('express').Router()
 
 const mysql = require('../dbconfig')
 const reviews = require('../model/review')
+const { auth } = require('../middleware')
 
 router.get('/:id_item', (req, res) => {
   const { id_item } = req.params
@@ -21,7 +22,7 @@ router.get('/:id_item', (req, res) => {
   })
 })
 
-router.post('/insert', (req, res) => {
+router.post('/insert', auth, (req, res) => {
   const { id_item, id_user, name, review, rating } = req.body
   console.log(id_user);
 
@@ -61,7 +62,7 @@ router.post('/insert', (req, res) => {
   })
 })
 
-router.delete('/delete/:id_review/:id_item', (req, res) => {
+router.delete('/delete/:id_review/:id_item', auth, (req, res) => {
   const { id_review, id_item } = req.params
   mysql.execute(reviews.delete_review, [id_review], (err, result, field) => {
     if (err == null) {

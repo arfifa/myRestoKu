@@ -5,6 +5,7 @@ const multer = require('multer')
 const mysql = require('../dbconfig')
 const restaurant = require('../model/restaurant')
 const upload = require('../helper')
+const { auth, admin } = require('../middleware')
 
 const uploadImageLogo = multer(
   {
@@ -43,7 +44,7 @@ router.get('/', (req, res) => {
   })
 })
 
-router.post('/insert', uploadImageLogo, (req, res) => {
+router.post('/insert', uploadImageLogo, auth, admin, (req, res) => {
   const { id_user, name, longitude, latitude, description } = req.body
   const logo = req.file.filename
 
@@ -64,7 +65,7 @@ router.post('/insert', uploadImageLogo, (req, res) => {
   })
 })
 
-router.put('/update/:id_restaurant', (req, res) => {
+router.put('/update/:id_restaurant', auth, admin, (req, res) => {
   const { name, logo, longitude, latitude, description } = req.body
   const { id_restaurant } = req.params
   const updated_on = new Date()
@@ -84,7 +85,7 @@ router.put('/update/:id_restaurant', (req, res) => {
   })
 })
 
-router.delete('/delete/:id_restaurant', (req, res) => {
+router.delete('/delete/:id_restaurant', auth, admin, (req, res) => {
   const { id_restaurant } = req.params
   mysql.execute(restaurant.delete_restaurant, [id_restaurant], (err, result, field) => {
     if (err == null) {

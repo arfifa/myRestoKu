@@ -36,7 +36,7 @@ const karyawan = (req, res, next) => {
   const jwt_token = req.headers['authorization'].substr(7)
   try {
     const user = jwt.verify(jwt_token, process.env.APP_KEY)
-    if (user.id_role == 2) {
+    if (user.id_role == 2 || user.id_role == 1) {
       next()
     } else {
       res.send({ success: false, msg: 'You not Karyawan' })
