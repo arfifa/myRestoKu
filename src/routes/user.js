@@ -71,7 +71,7 @@ router.get('/', auth, (req, res) => {
   })
 })
 
-router.get('/:id_user', auth, (req, res) => {
+router.get('/update/:id_user', auth, (req, res) => {
   const { id_user } = req.params
   mysql.execute(user.user_by_id, [id_user], (err, result, field) => {
     res.send({
