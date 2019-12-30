@@ -5,6 +5,7 @@ const multer = require('multer')
 const mysql = require('../dbconfig')
 const item = require('../model/item')
 const upload = require('../helper')
+const { karyawan } = require('../middleware')
 
 const uploadImageItem = multer({
   storage: upload.storageItem,
@@ -522,7 +523,7 @@ router.get('/item_by_id/:id_item', (req, res) => {
   })
 })
 
-router.post('/insert', uploadImageItem, (req, res) => {
+router.post('/insert', uploadImageItem, karyawan, (req, res) => {
   const { id_category, item_name, price, description, ratings } = req.body
   const images = req.file.filename
 
@@ -543,7 +544,7 @@ router.post('/insert', uploadImageItem, (req, res) => {
   })
 })
 
-router.put('/update/:id_item', (req, res) => {
+router.put('/update/:id_item', karyawan, (req, res) => {
   const { id_category, item_name, price, description, images, ratings } = req.body
   const { id_item } = req.params
   const updated_on = new Date()
@@ -579,5 +580,7 @@ router.delete('/delete/:id_item', (req, res) => {
     }
   })
 })
+
+
 
 module.exports = router

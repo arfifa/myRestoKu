@@ -16,6 +16,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use('/public', express.static('public/imagesItem'))
 
 app.use('/user', user)
 app.use('/role', auth, admin, role)
