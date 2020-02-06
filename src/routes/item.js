@@ -5,11 +5,15 @@ const multer = require('multer')
 const mysql = require('../dbconfig')
 const item = require('../model/item')
 const upload = require('../helper')
-const { karyawan } = require('../middleware')
+const {
+  karyawan
+} = require('../middleware')
 
 const uploadImageItem = multer({
   storage: upload.storageItem,
-  limits: { fileSize: 1000000 },
+  limits: {
+    fileSize: 1000000
+  },
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb)
   }
@@ -31,7 +35,15 @@ function checkFileType(file, cb) {
 }
 
 router.get('/', (req, res) => {
-  const { item_name, lowers_price, highest_price, ratings, sort, limits, page } = req.query
+  const {
+    item_name,
+    lowers_price,
+    highest_price,
+    ratings,
+    sort,
+    limits,
+    page
+  } = req.query
   if (item_name) {
     if (item_name && sort && limits && page) {
       if (sort == 'ASC') {
@@ -44,7 +56,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -54,7 +66,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -68,7 +80,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -78,7 +90,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -93,7 +105,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -103,7 +115,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -117,7 +129,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE item_name LIKE '%${item_name}%'`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -127,7 +139,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -140,12 +152,12 @@ router.get('/', (req, res) => {
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
-              status: 200,
+              success: true,
               result: result
             })
           } else {
             res.send({
-              status: 400,
+              success: false,
               msg: "error"
             })
           }
@@ -155,12 +167,12 @@ router.get('/', (req, res) => {
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
-              status: 200,
+              success: true,
               result: result
             })
           } else {
             res.send({
-              status: 400,
+              success: false,
               msg: "error"
             })
           }
@@ -171,12 +183,12 @@ router.get('/', (req, res) => {
       mysql.execute(sql, [], (err, result, field) => {
         if (err == null) {
           res.send({
-            status: 200,
+            success: true,
             result: result
           })
         } else {
           res.send({
-            status: 400,
+            success: false,
             msg: "error"
           })
         }
@@ -193,7 +205,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -203,7 +215,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -216,7 +228,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -226,7 +238,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -241,7 +253,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -251,7 +263,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -264,7 +276,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE price >= ${lowers_price} AND price <= ${highest_price}`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -274,7 +286,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -287,12 +299,12 @@ router.get('/', (req, res) => {
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
-              status: 200,
+              success: true,
               result: result
             })
           } else {
             res.send({
-              status: 400,
+              success: false,
               msg: "error"
             })
           }
@@ -302,12 +314,12 @@ router.get('/', (req, res) => {
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
-              status: 200,
+              success: true,
               result: result
             })
           } else {
             res.send({
-              status: 400,
+              success: false,
               msg: "error"
             })
           }
@@ -318,12 +330,12 @@ router.get('/', (req, res) => {
       mysql.execute(sql, [], (err, result, field) => {
         if (err == null) {
           res.send({
-            status: 200,
+            success: true,
             result: result
           })
         } else {
           res.send({
-            status: 400,
+            success: false,
             msg: "error"
           })
         }
@@ -340,7 +352,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -350,7 +362,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -363,7 +375,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -373,7 +385,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -388,7 +400,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -398,7 +410,7 @@ router.get('/', (req, res) => {
               })
             } else {
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -411,7 +423,7 @@ router.get('/', (req, res) => {
               const countRows = `SELECT COUNT(*) AS count_item FROM items WHERE ratings >= ${ratings}`
               mysql.execute(countRows, [], (error, results, fields) => {
                 res.send({
-                  status: 200,
+                  success: true,
                   result: result,
                   page: page,
                   limit: limits,
@@ -423,7 +435,7 @@ router.get('/', (req, res) => {
               console.log(err)
 
               res.send({
-                status: 400,
+                success: false,
                 msg: 'error'
               })
             }
@@ -436,12 +448,12 @@ router.get('/', (req, res) => {
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
-              status: 200,
+              success: true,
               result: result
             })
           } else {
             res.send({
-              status: 400,
+              success: false,
               msg: "error"
             })
           }
@@ -451,12 +463,12 @@ router.get('/', (req, res) => {
         mysql.execute(sql, [], (err, result, field) => {
           if (err == null) {
             res.send({
-              status: 200,
+              success: true,
               result: result
             })
           } else {
             res.send({
-              status: 400,
+              success: false,
               msg: "error"
             })
           }
@@ -467,12 +479,12 @@ router.get('/', (req, res) => {
       mysql.execute(sql, [], (err, result, field) => {
         if (err == null) {
           res.send({
-            status: 200,
+            success: true,
             result: result
           })
         } else {
           res.send({
-            status: 400,
+            success: false,
             msg: "error"
           })
         }
@@ -482,12 +494,12 @@ router.get('/', (req, res) => {
     mysql.execute(item.items, [], (err, result, field) => {
       if (err == null) {
         res.send({
-          status: 200,
+          success: true,
           result: result
         })
       } else {
         res.send({
-          status: 400,
+          success: false,
           msg: "error"
         })
       }
@@ -495,28 +507,30 @@ router.get('/', (req, res) => {
   }
 })
 
-router.get('/item_by_id/:id_item', (req, res) => {
-  const { id_item } = req.params
+router.get('/:id_item', (req, res) => {
+  const {
+    id_item
+  } = req.params
   mysql.execute(item.item_by_id, [id_item], (err, result, field) => {
     if (err == null) {
       const sql = `SELECT id_item, id_category, item_name, price, images, ratings FROM items WHERE id_category=${result[0].id_category} AND id_item!=${result[0].id_item} ORDER BY ratings DESC`
       mysql.execute(sql, [], (error, results, fields) => {
         if (error == null) {
           res.send({
-            status: 200,
+            success: true,
             result: result,
             showcase: results
           })
         } else {
           res.send({
-            status: 400,
+            success: false,
             msg: "error"
           })
         }
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         msg: "error"
       })
     }
@@ -524,7 +538,13 @@ router.get('/item_by_id/:id_item', (req, res) => {
 })
 
 router.post('/insert', uploadImageItem, karyawan, (req, res) => {
-  const { id_category, item_name, price, description, ratings } = req.body
+  const {
+    id_category,
+    item_name,
+    price,
+    description,
+    ratings
+  } = req.body
   const images = req.file.filename
 
   const created_on = new Date()
@@ -532,12 +552,12 @@ router.post('/insert', uploadImageItem, karyawan, (req, res) => {
   mysql.execute(item.insert_item, [id_category, item_name, price, description, images, ratings, created_on, updated_on], (err, result, field) => {
     if (err == null) {
       res.send({
-        status: 200,
+        success: true,
         result
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         msg: err
       })
     }
@@ -545,19 +565,29 @@ router.post('/insert', uploadImageItem, karyawan, (req, res) => {
 })
 
 router.put('/update/:id_item', karyawan, (req, res) => {
-  const { id_category, item_name, price, description, images, ratings } = req.body
-  const { id_item } = req.params
+  const {
+    id_category,
+    item_name,
+    price,
+    description,
+    images,
+    ratings
+  } = req.body
+  const {
+    id_item
+  } = req.params
+  console.log(item_name)
   const updated_on = new Date()
 
   mysql.execute(item.update_item, [id_category, item_name, price, description, images, ratings, updated_on, id_item], (err, result, field) => {
     if (err == null) {
       res.send({
-        status: 200,
+        success: true,
         result: result
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         result: "error"
       })
     }
@@ -565,16 +595,18 @@ router.put('/update/:id_item', karyawan, (req, res) => {
 })
 
 router.delete('/delete/:id_item', (req, res) => {
-  const { id_item } = req.params
+  const {
+    id_item
+  } = req.params
   mysql.execute(item.delete_item, [id_item], (err, result, field) => {
     if (err == null) {
       res.send({
-        status: 200,
+        success: true,
         result: result
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         result: "error"
       })
     }

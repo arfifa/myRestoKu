@@ -5,17 +5,20 @@ const multer = require('multer')
 const mysql = require('../dbconfig')
 const restaurant = require('../model/restaurant')
 const upload = require('../helper')
-const { auth, admin } = require('../middleware')
+const {
+  auth,
+  admin
+} = require('../middleware')
 
-const uploadImageLogo = multer(
-  {
-    storage: upload.storageRestaurant,
-    limits: { fileSize: 1000000 },
-    fileFilter: function (req, file, cb) {
-      checkFileType(file, cb)
-    }
+const uploadImageLogo = multer({
+  storage: upload.storageRestaurant,
+  limits: {
+    fileSize: 1000000
+  },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb)
   }
-).single('logo')
+}).single('logo')
 
 function checkFileType(file, cb) {
   const filetypes = /jpeg|jpg|png|gif/
@@ -45,12 +48,18 @@ router.get('/', (req, res) => {
 })
 
 router.post('/insert', uploadImageLogo, auth, admin, (req, res) => {
-  const { id_user, name, longitude, latitude, description } = req.body
+  const {
+    id_admin,
+    name,
+    longitude,
+    latitude,
+    description
+  } = req.body
   const logo = req.file.filename
 
   const created_on = new Date()
   const updated_on = new Date()
-  mysql.execute(restaurant.insert_restaurant, [id_user, name, logo, longitude, latitude, description, created_on, updated_on], (err, result, field) => {
+  mysql.execute(restaurant.insert_restaurant, [id_admin, name, logo, longitude, latitude, description, created_on, updated_on], (err, result, field) => {
     if (err == null) {
       res.send({
         status: 200,
@@ -66,8 +75,16 @@ router.post('/insert', uploadImageLogo, auth, admin, (req, res) => {
 })
 
 router.put('/update/:id_restaurant', auth, admin, (req, res) => {
-  const { name, logo, longitude, latitude, description } = req.body
-  const { id_restaurant } = req.params
+  const {
+    name,
+    logo,
+    longitude,
+    latitude,
+    description
+  } = req.body
+  const {
+    id_restaurant
+  } = req.params
   const updated_on = new Date()
 
   mysql.execute(restaurant.update_restaurant, [name, logo, longitude, latitude, description, updated_on, id_restaurant], (err, result, field) => {
@@ -86,7 +103,9 @@ router.put('/update/:id_restaurant', auth, admin, (req, res) => {
 })
 
 router.delete('/delete/:id_restaurant', auth, admin, (req, res) => {
-  const { id_restaurant } = req.params
+  const {
+    id_restaurant
+  } = req.params
   mysql.execute(restaurant.delete_restaurant, [id_restaurant], (err, result, field) => {
     if (err == null) {
       res.send({

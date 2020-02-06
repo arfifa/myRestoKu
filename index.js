@@ -18,6 +18,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/public', express.static('public/imagesItem'))
 
+app.use(cors())
+
 app.use('/user', user)
 app.use('/role', auth, admin, role)
 app.use('/item', item)

@@ -13,12 +13,12 @@ router.post('/login', (req, res) => {
     if (result.length > 0) {
       if (bcrypt.compareSync(password, result[0].password)) {
         const { id_role, id_user } = result[0]
-        const auth = jwt.sign({ id_role, username, id_user }, process.env.APP_KEY, { expiresIn: '1d' })
+        const token = jwt.sign({ id_role, username, id_user }, process.env.APP_KEY, { expiresIn: '1d' })
         const created_on = new Date()
         mysql.execute(user.get_token, [username], (err, result, field) => {
           if (result.length === 0) {
-            mysql.execute(user.insert_token, [auth, username], (err, result, field) => {
-              res.send({ success: true, auth })
+            mysql.execute(user.insert_token, [token, username], (err, result, field) => {
+              res.send({ success: true, token })
             })
           } else {
             const expiredToken = jwt.decode(result[0].id_token, process.env.APP_KEY)
@@ -30,8 +30,8 @@ router.post('/login', (req, res) => {
                 token: result[0].id_token
               })
             } else {
-              mysql.execute(user.update_token, [auth, username], (err, result, field) => {
-                res.send({ success: true, auth })
+              mysql.execute(user.update_token, [token, username], (err, result, field) => {
+                res.send({ success: true, token })
               })
             }
           }
@@ -52,20 +52,20 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-  const { name, id_card, address, no_phone, username, password, id_role } = req.body
+  const { no_telp, username, password, date_birth, gender, fullname, email, id_role } = req.body
   const enc_pass = bcrypt.hashSync(password)
 
   const created_on = new Date()
   const updated_on = new Date()
-  mysql.execute(user.insert_user, [name, id_card, address, no_phone, username, enc_pass, id_role, created_on, updated_on], (err, result, field) => {
+  mysql.execute(user.insert_user, [fullname, date_birth, gender, no_telp, email, username, enc_pass, id_role, created_on, updated_on], (err, result, field) => {
     if (err == null) {
       res.send({
-        status: 200,
+        success: true,
         result: result
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         result: "error"
       })
     }
@@ -76,46 +76,64 @@ router.get('/', auth, (req, res) => {
   mysql.execute(user.users, [], (err, result, field) => {
     if (err == null) {
       res.send({
-        status: 200,
+        success: true,
         result: result
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         result: "error"
       })
     }
   })
 })
 
-router.get('/:id_user', auth, admin, (req, res) => {
+router.get('/:id_user', auth, (req, res) => {
   const { id_user } = req.params
   mysql.execute(user.user_by_id, [id_user], (err, result, field) => {
     if (err == null) {
       res.send({
-        status: 200,
+        success: true,
         result: result
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         result: "error"
       })
     }
   })
 })
+
+router.get('/detail_user/:id_user', auth, (req, res) => {
+  const { id_user } = req.params
+  mysql.execute(user.detail_user_by_id, [id_user], (err, result, field) => {
+    if (err == null) {
+      res.send({
+        success: true,
+        result: result
+      })
+    } else {
+      res.send({
+        success: false,
+        result: "error"
+      })
+    }
+  })
+})
+
 
 router.get('/update/:id_user', auth, (req, res) => {
   const { id_user } = req.params
   mysql.execute(user.user_by_id, [id_user], (err, result, field) => {
     if (err == null) {
       res.send({
-        status: 200,
+        success: true,
         result: result
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         result: "error"
       })
     }
@@ -127,20 +145,20 @@ router.delete('/delete/:id_user', auth, (req, res) => {
   mysql.execute(user.delete_user, [id_user], (err, result, field) => {
     if (err == null) {
       res.send({
-        status: 200,
+        success: true,
         result: result
       })
     } else {
       res.send({
-        status: 400,
+        success: false,
         result: "error"
       })
     }
   })
 })
 
-router.delete('/logout', auth, (req, res) => {
-  const { username } = req.query
+router.delete('/logout/:username', auth, (req, res) => {
+  const { username } = req.params
   mysql.execute(user.delete_token, [username], (err, result, field) => {
     console.log(err);
     if (err == null) {
