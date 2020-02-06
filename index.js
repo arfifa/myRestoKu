@@ -10,17 +10,25 @@ const restaurant = require('./src/routes/restaurant');
 const category = require('./src/routes/category');
 const cart = require('./src/routes/cart');
 const review = require('./src/routes/review');
-const { auth, admin, karyawan } = require('./src/middleware');
+const forgot = require('./src/routes/forgotPassword')
+const {
+  auth,
+  admin,
+  karyawan
+} = require('./src/middleware');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 app.use(bodyParser.json())
 app.use('/public', express.static('public/imagesItem'))
 
 app.use(cors())
 
 app.use('/user', user)
+app.use('/', forgot)
 app.use('/role', auth, admin, role)
 app.use('/item', item)
 app.use('/restaurant', restaurant)

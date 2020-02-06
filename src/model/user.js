@@ -1,6 +1,7 @@
 module.exports = {
   users: 'SELECT * FROM users',
   user_login: 'SELECT * FROM users WHERE username=?',
+  mail_check: 'SELECT * FROM users WHERE email=?',
   insert_user: 'INSERT INTO users (fullname, date_birth, gender, no_telp, email, username, password, id_role, created_on, updated_on) VALUES(?,?,?,?,?,?,?,?,?,?)',
   update_user: 'UPDATE users SET name=?, id_card=?, address=?, no_phone=?, username=?, password=?, role_id=?, updated_on=? WHERE id_user=?',
   delete_user: 'DELETE FROM users WHERE id_user=?',
